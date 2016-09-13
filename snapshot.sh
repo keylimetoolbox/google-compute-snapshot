@@ -24,7 +24,7 @@ DEVICE_LIST="$(gcloud compute disks list --filter users~${INSTANCE_NAME} --forma
 # create the snapshots
 echo "${DEVICE_LIST}" | while read DEVICE_NAME
 do
-  echo "$(gcloud compute disks snapshot ${DEVICE_NAME} --snapshot-names gcs-${DEVICE_NAME}-${DATE_TIME} --zone ${INSTANCE_ZONE})"
+  echo "$(gcloud compute disks snapshot ${DEVICE_NAME} --snapshot-names gcs-${DEVICE_NAME}-${DATE_TIME} --zone ${INSTANCE_ZONE} --quiet)"
 done
 
 #
