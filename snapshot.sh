@@ -5,6 +5,9 @@ export PATH=$PATH:/usr/local/bin/:/usr/bin
 # CREATE DAILY SNAPSHOT
 #
 
+# Set this to the number of days of snapshots you want to keep
+RETENTION_DAYS=32
+
 # get the name for this vm
 INSTANCE_NAME="$(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/hostname" -H "Metadata-Flavor: Google")"
 # strip out the instanc name from the fullly qualified domain name the google returns
@@ -47,8 +50,8 @@ do
   # format the date
   SNAPSHOT_DATETIME="$(date -d ${SNAPSHOT_DATETIME} +%Y%m%d)"
 
-  # get the expiry date for snapshot deletion (currently 7 days)
-  SNAPSHOT_EXPIRY="$(date -d "-30 days" +"%Y%m%d")"
+  # get the expiry date for snapshot deletion
+  SNAPSHOT_EXPIRY="$(date -d "-$RETENTION_DAYS days" +"%Y%m%d")"
 
    # check if the snapshot is older than expiry date
   if [ $SNAPSHOT_EXPIRY -ge $SNAPSHOT_DATETIME ];
