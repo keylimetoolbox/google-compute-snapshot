@@ -7,7 +7,7 @@ export PATH=$PATH:/usr/local/bin/:/usr/bin
 
 # Set this to maximum number of hours that could pass after the last snapshot is created.
 # If this is exceeded (i.e. no snapshot made in this time) then sends an alert email
-# to $EMAIL_TO.
+# to $MAILTO.
 ALERT_HOURS=25
 
 # Set this to the number of days of snapshots you want to keep
@@ -79,5 +79,5 @@ done <<< "$SNAPSHOT_LIST"
 ELAPSED_HOURS=$[$[$(date +%s) - $NEWEST_TIMESTAMP] / 3600]
 if [ $ELAPSED_HOURS -gt $ALERT_HOURS ];
 then
-  echo "Last snapshot on ${INSTANCE_NAME} was made ${ELAPSED_HOURS} hours ago." | mail -s "Snapshot Alert" $EMAIL_TO
+  echo "Last snapshot on ${INSTANCE_NAME} was made ${ELAPSED_HOURS} hours ago." | mail -s "Snapshot Alert" $MAILTO
 fi
